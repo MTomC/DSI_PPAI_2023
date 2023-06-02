@@ -12,7 +12,7 @@ namespace PPAI.Entities {
         public string Nombre { get => nombre; set => nombre = value; }
         public int Id { get => id; set => id = value; }
 
-        public bool EsEnCurso() {
+        public bool EsEnCurso() { 
             if (Nombre.Contains("EnCurso"))
                 return true;
             return false;

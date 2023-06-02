@@ -36,15 +36,15 @@ namespace PPAI.Entities {
         public List<CambioEstadoEntity> CambiosEstado { get => cambiosEstado; set => cambiosEstado = value; }
         public int Id { get => id; set => id = value; }
 
-        public void SetEstadoActual(EstadoEntity e, DateTime fecha) {
-            CambioEstadoEntity nuevoCambioEstado = new CambioEstadoEntity();
+        public void SetEstadoActual(EstadoEntity e, DateTime fecha) {  
+            CambioEstadoEntity nuevoCambioEstado = new CambioEstadoEntity(); //new nuevo:cambioEstado
             nuevoCambioEstado.Estado = e;
             nuevoCambioEstado.FechaHoraInicio = fecha;
-            CambiosEstado.Add(nuevoCambioEstado);
+            CambiosEstado.Add(nuevoCambioEstado);  //setCambioEstado
         }
 
-        public bool ValidarInfoCliente(string respuesta, ValidacionEntity validacion) {
-            return Cliente.EsInfoCorrecta(respuesta, validacion);
+        public bool ValidarInfoCliente(string respuesta, ValidacionEntity validacion) { //esInfoCorrecta
+            return Cliente.EsInfoCorrecta(respuesta, validacion);  
         }
 
         public void CalcularDuracion(DateTime horaFin) {

@@ -33,20 +33,20 @@ namespace PPAI.Services {
         }
 
         public void NuevaRtaOperador(int idLlamada, int idCategoria, PantallaRegistrarRespuesta pantalla) {
-            llamadaActual = llamadaService.GetLlamadaById(idLlamada);
-            categoriaSeleccionada = categoriaService.GetCategoriaLlamadaById(idCategoria);
+            llamadaActual = llamadaService.GetLlamadaById(idLlamada); //getCliente
+            categoriaSeleccionada = categoriaService.GetCategoriaLlamadaById(idCategoria); //getCategoria
             _pantalla = pantalla;
             EstadoEntity enCurso = null;
-            foreach (EstadoEntity estadoE in estadoService.GetAll()) {
-                if (estadoE.EsEnCurso())
+            foreach (EstadoEntity estadoE in estadoService.GetAll()) { //*esEnCurso
+                if (estadoE.EsEnCurso()) 
                     enCurso = estadoE;
             }
             if (enCurso != null)
-                llamadaActual.SetEstadoActual(enCurso, DateTime.Now);
+                llamadaActual.SetEstadoActual(enCurso, DateTime.Now); //obtenerFechaActual
         }
 
         public void BuscarInfoLlamada() {
-            opcionSeleccionada = llamadaActual.OpcionSeleccionada;
+            opcionSeleccionada = llamadaActual.OpcionSeleccionada; //getOpcionSeleccionada
             subopcionSeleccionada = llamadaActual.SubOpcionSeleccionada;
             foreach (ValidacionEntity validacion in subopcionSeleccionada.ValidacionRequerida) {
                 validaciones.Add(validacion);
@@ -57,12 +57,12 @@ namespace PPAI.Services {
             llamadaActual.DescripcionOperador = rtaOperador;
             LlamarCU28(accion);
             EstadoEntity finalizada = null;
-            foreach (EstadoEntity estadoE in estadoService.GetAll()) {
+            foreach (EstadoEntity estadoE in estadoService.GetAll()) {  //esFinalizada
                 if (estadoE.EsFinalizada())
                     finalizada = estadoE;
             }
             DateTime now = DateTime.Now;
-            llamadaActual.CalcularDuracion(now);
+            llamadaActual.CalcularDuracion(now);   //calcularDuracion
             if (finalizada != null)
                 llamadaActual.SetEstadoActual(finalizada, now);
 
@@ -96,10 +96,10 @@ namespace PPAI.Services {
             MessageBox.Show("Accion registrada con exito");
         }
 
-        public bool TomarValidacion(string validacion, string respuesta) {
+        public bool TomarValidacion(string validacion, string respuesta) { //esValidacion 
             foreach (ValidacionEntity v in validaciones) {
                 if (v.Nombre == validacion) {
-                    return llamadaActual.ValidarInfoCliente(respuesta, v);
+                    return llamadaActual.ValidarInfoCliente(respuesta, v); //esInfoCorrect
                 }
             }
             return false;
