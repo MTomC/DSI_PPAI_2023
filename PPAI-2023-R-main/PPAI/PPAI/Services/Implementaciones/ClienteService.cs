@@ -9,11 +9,11 @@ namespace PPAI.Services.Implementaciones {
     public class ClienteService : IClienteService {
         IClienteDao cdao = new ClienteDao();
 
-        public List<ClienteEntity> GetAll() {
+        public List<Cliente> GetAll() {
             throw new NotImplementedException();
         }
 
-        public ClienteEntity GetClienteById(int id) {
+        public Cliente GetClienteById(int id) {
             return cdao.GetClienteById(id);
         }
     }

@@ -9,11 +9,11 @@ namespace PPAI.Services.Implementaciones {
     public class InformacionClienteService : IInformacionClienteService {
         IInformacionClienteDao ldao = new InformacionClienteDao();
 
-        public List<InformacionClienteEntity> GetAll() {
+        public List<InformacionCliente> GetAll() {
             throw new NotImplementedException();
         }
 
-        public List<InformacionClienteEntity> GetInformacionClienteById(int id) {
+        public List<InformacionCliente> GetInformacionClienteById(int id) {
             return ldao.GetInformacionClienteById(id);
         }
     }

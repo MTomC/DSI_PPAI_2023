@@ -7,8 +7,8 @@ using TPPav1.Datos;
 
 namespace PPAI.Data.Daos {
     public class InformacionClienteDao : IInformacionClienteDao {
-        public List<InformacionClienteEntity> GetInformacionClienteById(int ID) {
-            List<InformacionClienteEntity> lista = new List<InformacionClienteEntity>();
+        public List<InformacionCliente> GetInformacionClienteById(int ID) {
+            List<InformacionCliente> lista = new List<InformacionCliente>();
             string consulta = "Select * from InformacionCliente where idCliente = " + ID;
 
             DataTable tabla = BDHelper.ObtenerInstancia().Consultar(consulta);
@@ -16,7 +16,7 @@ namespace PPAI.Data.Daos {
             ValidacionDao vdao = new ValidacionDao();
             if (tabla.Rows.Count > 0) {
                 foreach (DataRow fila in tabla.Rows) {
-                    InformacionClienteEntity info = new InformacionClienteEntity();
+                    InformacionCliente info = new InformacionCliente();
                     info.DatoAValidar = fila["datoAValidar"].ToString();
                     info.Tipo = fila["tipo"].ToString();
                     info.OpcionCorrecta = ovdao.GetOpcionValidacionById((int)fila["idOpcionCorrecta"]);

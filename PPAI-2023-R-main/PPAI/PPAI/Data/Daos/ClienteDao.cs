@@ -6,8 +6,8 @@ using TPPav1.Datos;
 
 namespace PPAI.Data.Daos {
     class ClienteDao : IClienteDao {
-        public ClienteEntity GetClienteById(int id) {
-            ClienteEntity oCliente = new ClienteEntity();
+        public Cliente GetClienteById(int id) {
+            Cliente oCliente = new Cliente();
             string consulta = "Select * from Cliente where id = " + id;
 
             DataTable tabla = BDHelper.ObtenerInstancia().Consultar(consulta);

@@ -2,15 +2,15 @@
 
 namespace PPAI.Entities
 {
-    public class EstadoCancelada : Estado
+    public class EstadoLlamadaCancelada : Estado
     {
         // Static Instance {Singleton}
         private static Estado _instance;
         // Static GetInstance {Singleton}
-        public static Estado GetInstance() { return _instance ?? (_instance = new EstadoCancelada()); }
+        public static Estado GetInstance() { return _instance ?? (_instance = new EstadoLlamadaCancelada()); }
 
         // Constructor
-        private EstadoCancelada()
+        private EstadoLlamadaCancelada()
         {
             Id = 4;
             Nombre = "Cancelada";

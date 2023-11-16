@@ -3,6 +3,6 @@
 namespace PPAI.Data.InterfacesDaos {
     interface IClienteDao {
 
-        ClienteEntity GetClienteById(int id);
+        Cliente GetClienteById(int id);
     }
 }

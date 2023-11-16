@@ -1,5 +1,5 @@
 ﻿namespace PPAI.Entities {
-    public class InformacionClienteEntity {
+    public class InformacionCliente {
         private string datoAValidar;
         private OpcionValidacionEntity opcionCorrecta = new OpcionValidacionEntity();
         private ValidacionEntity validacion = new ValidacionEntity();

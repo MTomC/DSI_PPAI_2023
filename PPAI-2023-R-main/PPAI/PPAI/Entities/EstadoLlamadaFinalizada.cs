@@ -3,15 +3,15 @@
 namespace PPAI.Entities
 {
     // Inheritance class {State}
-    public class EstadoFinalizada : Estado
+    public class EstadoLlamadaFinalizada : Estado
     {
         // Static Instance {Singleton}
         private static Estado _instance;
         // Static GetInstance {Singleton}
-        public static Estado GetInstance() { return _instance ?? (_instance = new EstadoFinalizada()); }
+        public static Estado GetInstance() { return _instance ?? (_instance = new EstadoLlamadaFinalizada()); }
 
         // Constructor
-        private EstadoFinalizada()
+        private EstadoLlamadaFinalizada()
         {
             Id = 3;
             Nombre = "Finalizada";

@@ -22,7 +22,7 @@ namespace PPAI.Entities
         public virtual void CancelarLlamada(Llamada llamada, List<CambioEstado> cambios)
         {
             var cambio = FindLastCambioEstado(cambios);
-            UpdateEstado(llamada, cambio, EstadoCancelada.GetInstance());
+            UpdateEstado(llamada, cambio, EstadoLlamadaCancelada.GetInstance());
         }
         protected virtual Estado CreateProximoEstado() { return null;}
         

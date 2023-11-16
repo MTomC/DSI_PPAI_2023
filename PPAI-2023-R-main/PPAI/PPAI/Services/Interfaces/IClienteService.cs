@@ -4,8 +4,8 @@ using System.Collections.Generic;
 namespace PPAI.Services.Interfaces {
     internal interface IClienteService {
 
-        List<ClienteEntity> GetAll();
+        List<Cliente> GetAll();
 
-        ClienteEntity GetClienteById(int id);
+        Cliente GetClienteById(int id);
     }
 }

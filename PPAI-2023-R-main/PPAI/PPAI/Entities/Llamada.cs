@@ -13,7 +13,7 @@ namespace PPAI.Entities {
         private SubOpcionLlamadaEntity subOpcionSeleccionada = new SubOpcionLlamadaEntity();
         private string auditor;
         private string operador;
-        private ClienteEntity cliente = new ClienteEntity();
+        private Cliente cliente = new Cliente();
         private Accion accion = new Accion();
         // New kind of properties
         public Estado Estado { get; set; }
@@ -31,7 +31,7 @@ namespace PPAI.Entities {
         public SubOpcionLlamadaEntity SubOpcionSeleccionada { get => subOpcionSeleccionada; set => subOpcionSeleccionada = value; }
         public string Auditor { get => auditor; set => auditor = value; }
         public string Operador { get => operador; set => operador = value; }
-        public ClienteEntity Cliente { get => cliente; set => cliente = value; }
+        public Cliente Cliente { get => cliente; set => cliente = value; }
         public Accion Accion { get => accion; set => accion = value; }
 
         public List<CambioEstado> CambiosEstado { get => cambiosEstado; set => cambiosEstado = value; }
