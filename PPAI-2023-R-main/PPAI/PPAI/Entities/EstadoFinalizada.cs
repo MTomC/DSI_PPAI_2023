@@ -11,12 +11,14 @@
         // Constructor
         private EstadoFinalizada()
         {
-            
+            Id = 3;
+            Nombre = "Finalizada";
+            Ambito = "Llamada";
         }
 
 
         
-        // Overriding boolean method {State}
+        // Override methods
         public override bool EsFinalizada() { return true; }
 
     }

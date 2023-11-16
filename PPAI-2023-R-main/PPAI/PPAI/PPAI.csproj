@@ -73,6 +73,7 @@
     <Compile Include="Entities\CambioEstado.cs" />
     <Compile Include="Entities\CategoriaLlamadaEntity.cs" />
     <Compile Include="Entities\ClienteEntity.cs" />
+    <Compile Include="Entities\EstadoCancelada.cs" />
     <Compile Include="Entities\EstadoEnCurso.cs" />
     <Compile Include="Entities\Estado.cs" />
     <Compile Include="Entities\EstadoFinalizada.cs" />

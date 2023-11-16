@@ -13,7 +13,7 @@ namespace PPAI.Services {
         OpcionLlamadaEntity opcionSeleccionada = new OpcionLlamadaEntity();
         SubOpcionLlamadaEntity subopcionSeleccionada = new SubOpcionLlamadaEntity();
         List<ValidacionEntity> validaciones = new List<ValidacionEntity>();
-        PantallaRegistrarRespuesta _pantalla;
+        PantallaRegistrarRespuesta pantalla;
 
         IEstadoService estadoService = new EstadoService();
         ILlamadaService llamadaService = new LlamadaService();
@@ -25,8 +25,8 @@ namespace PPAI.Services {
             foreach (ValidacionEntity validacion in validaciones) {
                 nombreValidaciones.Add(validacion.Nombre);
             }
-            _pantalla.MostrarDatosLlamada(llamadaActual.Cliente.NombreCompleto, categoriaSeleccionada.Nombre, opcionSeleccionada.Nombre, subopcionSeleccionada.Nombre);
-            _pantalla.MostrarValidaciones(nombreValidaciones);
+            pantalla.MostrarDatosLlamada(llamadaActual.Cliente.NombreCompleto, categoriaSeleccionada.Nombre, opcionSeleccionada.Nombre, subopcionSeleccionada.Nombre);
+            pantalla.MostrarValidaciones(nombreValidaciones);
         }
 
         public void NuevaRtaOperador(int idLlamada, int idCategoria, PantallaRegistrarRespuesta pantalla) {
@@ -34,19 +34,13 @@ namespace PPAI.Services {
             // MODIFICAR ESTO CON LOS NUEVOS MÉTODOS!!!
             
             
-            llamadaActual = llamadaService.GetLlamadaById(idLlamada); //getCliente
-            categoriaSeleccionada = categoriaService.GetCategoriaLlamadaById(idCategoria); //getCategoria
-            _pantalla = pantalla;
+            llamadaActual = llamadaService.GetLlamadaById(idLlamada); // Get Llamada from Service
+            categoriaSeleccionada = categoriaService.GetCategoriaLlamadaById(idCategoria); // Get Categoria from Service
+            this.pantalla = pantalla; // Set Pantalla
             
             llamadaActual.NuevaRtaOperador(); // Delegar la responsabilidad a la llamada
             
-            Estado enCurso = null;
-            foreach (Estado estadoE in estadoService.GetAll()) { //*esEnCurso
-                if (estadoE.EsEnCurso()) 
-                    enCurso = estadoE;
-            }
-            if (enCurso != null)
-                llamadaActual.SetEstadoActual(enCurso, DateTime.Now); //obtenerFechaActual
+            // Creo que esto funciona, NO FUE TESTEADO, Requiere cambios en la BD y los DAO!!!!!!!!!!!!!
         }
 
         public void BuscarInfoLlamada() {
@@ -60,6 +54,11 @@ namespace PPAI.Services {
         public void TomarRtaYConfirmacion(string rtaOperador, Accion accion) {
             llamadaActual.DescripcionOperador = rtaOperador;
             LlamarCU28(accion);
+            
+            // -----------Version con el patron aplicado-------------------------
+            llamadaActual.FinalizarLlamada(); // Delegar a la llamada
+            // ------------------------------------------------------------------
+            
             Estado finalizada = null;
             foreach (Estado estadoE in estadoService.GetAll()) {  //esFinalizada
                 if (estadoE.EsFinalizada())
@@ -92,7 +91,7 @@ namespace PPAI.Services {
 
         public void FinCU() {
             MessageBox.Show("Respuesta registrada con exito");
-            _pantalla.Close();
+            pantalla.Close();
         }
 
         public void LlamarCU28(Accion accion) {

@@ -13,24 +13,22 @@ namespace PPAI.Entities
         // Constructor
         private EstadoIniciada()
         {
-            
+            Id = 1;
+            Nombre = "Iniciada";
+            Ambito = "Llamada";
         }
         
-        // Overriding boolean method {State}
+        // Override methods
         public override bool EsIniciada() { return true; }
 
         // Method for....
         public override void NuevaRtaOperador(Llamada llamada, List<CambioEstado> cambios)
         {
-            // Update CambioEstado and get the New Estado and CambioEstado
-            var estadoActualizado = ActualizarEstado(cambios);
-            
-            // Set new Estado and Add new CambioEstado in Llamada
-            llamada.Estado = estadoActualizado.nvoEstado;
-            llamada.CambiosEstado.Add(estadoActualizado.nvoCambio);
+            var cambio = FindLastCambioEstado(cambios);
+            UpdateEstado(llamada, cambio);
         }
 
-        public override Estado CrearProximoEstado() { return EstadoEnCurso.GetInstance(); }
+        public override Estado CreateProximoEstado() { return EstadoEnCurso.GetInstance(); }
 
 
 

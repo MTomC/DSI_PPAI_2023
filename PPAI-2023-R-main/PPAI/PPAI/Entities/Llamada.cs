@@ -3,7 +3,8 @@ using System.Collections.Generic;
 
 namespace PPAI.Entities {
     public class Llamada {
-        private string descripcionOperador;
+        
+        // Fields
         private string detalleAccionRequerida;
         private TimeSpan duracion;
         private bool encuestaEnviada;
@@ -20,7 +21,8 @@ namespace PPAI.Entities {
         private List<CambioEstado> cambiosEstado = new List<CambioEstado>();
         private int id;
 
-        public string DescripcionOperador { get => descripcionOperador; set => descripcionOperador = value; }
+        public string DescripcionOperador { get; set; }
+
         public string DetalleAccionRequerida { get => detalleAccionRequerida; set => detalleAccionRequerida = value; }
         public TimeSpan Duracion { get => duracion; set => duracion = value; }
         public bool EncuestaEnviada { get => encuestaEnviada; set => encuestaEnviada = value; }
@@ -35,9 +37,17 @@ namespace PPAI.Entities {
         public List<CambioEstado> CambiosEstado { get => cambiosEstado; set => cambiosEstado = value; }
         public int Id { get => id; set => id = value; }
 
+        
+        // Methods
+        
         public void NuevaRtaOperador()
         {
             Estado.NuevaRtaOperador(this, CambiosEstado); // Delegar la responsabilidad al estado
+        }
+
+        public void FinalizarLlamada()
+        {
+            Estado.FinalizarLlamada(this, CambiosEstado); // Delegar al estado
         }
 
         public bool ValidarInfoCliente(string respuesta, ValidacionEntity validacion) { //esInfoCorrecta
