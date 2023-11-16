@@ -1,15 +1,15 @@
 ﻿using System;
 
 namespace PPAI.Entities {
-    public class CambioEstadoEntity {
+    public class CambioEstado {
         // Fields
         private DateTime fechaHoraInicio;
         private DateTime fechaHoraFin;
-        private EstadoEntity estado = new EstadoEntity();
+        private Estado estado = new Estado();
         private int id;
 
         // Constructor
-        public CambioEstadoEntity(DateTime fechaHoraInicio, EstadoEntity estado)
+        public CambioEstado(DateTime fechaHoraInicio, Estado estado)
         {
             this.fechaHoraInicio = fechaHoraInicio;
             this.estado = estado;
@@ -18,7 +18,7 @@ namespace PPAI.Entities {
         // Getters & Setters
         public DateTime FechaHoraInicio { get => fechaHoraInicio; set => fechaHoraInicio = value; }
         public DateTime FechaHoraFin { get => fechaHoraFin; set => fechaHoraFin = value; }
-        public EstadoEntity Estado { get => estado; set => estado = value; }
+        public Estado Estado { get => estado; set => estado = value; }
         public int Id { get => id; set => id = value; }
     }
 }

@@ -3,15 +3,12 @@ using PPAI.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TPPav1.Datos;
 
 namespace PPAI.Data.Daos {
     class AccionDao : IAccionDao {
-        public AccionEntity GetAccionById(int id) {
-            AccionEntity oAccion = new AccionEntity();
+        public Accion GetAccionById(int id) {
+            Accion oAccion = new Accion();
             string consulta = "SELECT * FROM Accion WHERE id =" + id;
 
             DataTable tabla = BDHelper.ObtenerInstancia().Consultar(consulta);
@@ -22,14 +19,14 @@ namespace PPAI.Data.Daos {
             return oAccion;
         }
 
-        public List<AccionEntity> GetAll() {
-            List<AccionEntity> lista = new List<AccionEntity>();
+        public List<Accion> GetAll() {
+            List<Accion> lista = new List<Accion>();
             string consulta = "Select * from Accion";
 
             DataTable tabla = BDHelper.ObtenerInstancia().Consultar(consulta);
             if (tabla.Rows.Count > 0) {
                 foreach (DataRow fila in tabla.Rows) {
-                    AccionEntity oAccion = new AccionEntity();
+                    Accion oAccion = new Accion();
                     oAccion.Descripcion = fila["descripcion"].ToString();
                     oAccion.Id = Int32.Parse(tabla.Rows[0]["id"].ToString());
                     lista.Add(oAccion);

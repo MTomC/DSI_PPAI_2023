@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using PPAI.Entities;
 using PPAI.Services;
@@ -60,7 +54,7 @@ namespace PPAI.UI {
 
         private void btnOk_Click(object sender, EventArgs e) {
             if (MessageBox.Show("Desea confirmar la operacion realizada?", "Confirmacion", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK) {
-                AccionEntity accionActual = new AccionEntity();
+                Accion accionActual = new Accion();
                 accionActual.Id = (int)cboAcciones.SelectedIndex + 1;
                 accionActual.Descripcion = (string)cboAcciones.Text;
                 controlador.TomarRtaYConfirmacion(txtRespuestaOperador.Text, accionActual); //tomarRespuesta, tomarConfirmacion

@@ -4,14 +4,11 @@ using PPAI.Services.Interfaces;
 using PPAI.UI;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PPAI.Services {
     public class ControladorRegistrarRespuesta {
-        LlamadaEntity llamadaActual;
+        Llamada llamadaActual;
         CategoriaLlamadaEntity categoriaSeleccionada;
         OpcionLlamadaEntity opcionSeleccionada = new OpcionLlamadaEntity();
         SubOpcionLlamadaEntity subopcionSeleccionada = new SubOpcionLlamadaEntity();
@@ -33,11 +30,18 @@ namespace PPAI.Services {
         }
 
         public void NuevaRtaOperador(int idLlamada, int idCategoria, PantallaRegistrarRespuesta pantalla) {
+            
+            // MODIFICAR ESTO CON LOS NUEVOS MÉTODOS!!!
+            
+            
             llamadaActual = llamadaService.GetLlamadaById(idLlamada); //getCliente
             categoriaSeleccionada = categoriaService.GetCategoriaLlamadaById(idCategoria); //getCategoria
             _pantalla = pantalla;
-            EstadoEntity enCurso = null;
-            foreach (EstadoEntity estadoE in estadoService.GetAll()) { //*esEnCurso
+            
+            llamadaActual.NuevaRtaOperador(); // Delegar la responsabilidad a la llamada
+            
+            Estado enCurso = null;
+            foreach (Estado estadoE in estadoService.GetAll()) { //*esEnCurso
                 if (estadoE.EsEnCurso()) 
                     enCurso = estadoE;
             }
@@ -53,11 +57,11 @@ namespace PPAI.Services {
             }
         }
 
-        public void TomarRtaYConfirmacion(string rtaOperador, AccionEntity accion) {
+        public void TomarRtaYConfirmacion(string rtaOperador, Accion accion) {
             llamadaActual.DescripcionOperador = rtaOperador;
             LlamarCU28(accion);
-            EstadoEntity finalizada = null;
-            foreach (EstadoEntity estadoE in estadoService.GetAll()) {  //esFinalizada
+            Estado finalizada = null;
+            foreach (Estado estadoE in estadoService.GetAll()) {  //esFinalizada
                 if (estadoE.EsFinalizada())
                     finalizada = estadoE;
             }
@@ -75,8 +79,8 @@ namespace PPAI.Services {
 
         //Flujo Alternativo: CancelarLlamada
         public void CancelarLlamada() {
-            EstadoEntity cancelada = null;
-            foreach (EstadoEntity estadoE in estadoService.GetAll()) {
+            Estado cancelada = null;
+            foreach (Estado estadoE in estadoService.GetAll()) {
                 if (estadoE.EsCancelada())
                     cancelada = estadoE;
             }
@@ -91,7 +95,7 @@ namespace PPAI.Services {
             _pantalla.Close();
         }
 
-        public void LlamarCU28(AccionEntity accion) {
+        public void LlamarCU28(Accion accion) {
             llamadaActual.Accion = accion;
             MessageBox.Show("Accion registrada con exito");
         }

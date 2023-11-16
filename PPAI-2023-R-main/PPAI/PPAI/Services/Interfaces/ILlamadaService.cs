@@ -1,17 +1,13 @@
-﻿using System;
-using PPAI.Entities;
+﻿using PPAI.Entities;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PPAI.Services.Interfaces {
     internal interface ILlamadaService {
 
-        List<LlamadaEntity> GetAll();
+        List<Llamada> GetAll();
 
-        LlamadaEntity GetLlamadaById(int id);
+        Llamada GetLlamadaById(int id);
 
-        int RegLlamadaRta(LlamadaEntity oLlamada);
+        int RegLlamadaRta(Llamada oLlamada);
     }
 }

@@ -4,23 +4,20 @@ using PPAI.Entities;
 using PPAI.Services.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PPAI.Services.Implementaciones {
     public class LlamadaService : ILlamadaService {
         ILlamadaDao ldao = new LlamadaDao();
 
-        public List<LlamadaEntity> GetAll() {
+        public List<Llamada> GetAll() {
             throw new NotImplementedException();
         }
 
-        public LlamadaEntity GetLlamadaById(int id) {
+        public Llamada GetLlamadaById(int id) {
             return ldao.GetLlamadaById(id);
         }
 
-        public int RegLlamadaRta(LlamadaEntity oLlamada) {
+        public int RegLlamadaRta(Llamada oLlamada) {
             return ldao.RegLlamadaRta(oLlamada);
         }
     }

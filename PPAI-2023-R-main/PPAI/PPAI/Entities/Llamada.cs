@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PPAI.Entities {
-    public class LlamadaEntity {
+    public class Llamada {
         private string descripcionOperador;
         private string detalleAccionRequerida;
         private TimeSpan duracion;
@@ -16,9 +13,11 @@ namespace PPAI.Entities {
         private string auditor;
         private string operador;
         private ClienteEntity cliente = new ClienteEntity();
-        private AccionEntity accion = new AccionEntity();
+        private Accion accion = new Accion();
+        // New kind of properties
+        public Estado Estado { get; set; }
 
-        private List<CambioEstadoEntity> cambiosEstado = new List<CambioEstadoEntity>();
+        private List<CambioEstado> cambiosEstado = new List<CambioEstado>();
         private int id;
 
         public string DescripcionOperador { get => descripcionOperador; set => descripcionOperador = value; }
@@ -31,16 +30,14 @@ namespace PPAI.Entities {
         public string Auditor { get => auditor; set => auditor = value; }
         public string Operador { get => operador; set => operador = value; }
         public ClienteEntity Cliente { get => cliente; set => cliente = value; }
-        public AccionEntity Accion { get => accion; set => accion = value; }
+        public Accion Accion { get => accion; set => accion = value; }
 
-        public List<CambioEstadoEntity> CambiosEstado { get => cambiosEstado; set => cambiosEstado = value; }
+        public List<CambioEstado> CambiosEstado { get => cambiosEstado; set => cambiosEstado = value; }
         public int Id { get => id; set => id = value; }
 
-        public void SetEstadoActual(EstadoEntity e, DateTime fecha) {  
-            CambioEstadoEntity nuevoCambioEstado = new CambioEstadoEntity(); //new nuevo:cambioEstado
-            nuevoCambioEstado.Estado = e;
-            nuevoCambioEstado.FechaHoraInicio = fecha;
-            CambiosEstado.Add(nuevoCambioEstado);  //setCambioEstado
+        public void NuevaRtaOperador()
+        {
+            Estado.NuevaRtaOperador(this, CambiosEstado); // Delegar la responsabilidad al estado
         }
 
         public bool ValidarInfoCliente(string respuesta, ValidacionEntity validacion) { //esInfoCorrecta
@@ -49,7 +46,7 @@ namespace PPAI.Entities {
 
         public void CalcularDuracion(DateTime horaFin) {
             DateTime horaInicio = DateTime.Now;
-            foreach (CambioEstadoEntity cambioEstado in CambiosEstado) {
+            foreach (CambioEstado cambioEstado in CambiosEstado) {
                 if (cambioEstado.Estado.EsEnCurso())
                     horaInicio = cambioEstado.FechaHoraInicio;
             }

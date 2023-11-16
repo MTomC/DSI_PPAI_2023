@@ -2,21 +2,17 @@
 using PPAI.Data.InterfacesDaos;
 using PPAI.Entities;
 using PPAI.Services.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PPAI.Services.Implementaciones {
     public class AccionService : IAccionService {
         IAccionDao adao = new AccionDao();
 
-        public List<AccionEntity> GetAll() {
+        public List<Accion> GetAll() {
             return adao.GetAll();
         }
 
-        public AccionEntity GetAccionById(int id) {
+        public Accion GetAccionById(int id) {
             return adao.GetAccionById(id);
         }
     }

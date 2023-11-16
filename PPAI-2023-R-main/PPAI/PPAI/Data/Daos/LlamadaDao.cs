@@ -1,17 +1,13 @@
 ﻿using PPAI.Data.InterfacesDaos;
 using PPAI.Entities;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TPPav1.Datos;
 
 namespace PPAI.Data.Daos {
     public class LlamadaDao : ILlamadaDao {
-        public LlamadaEntity GetLlamadaById(int id) {
-            LlamadaEntity oLlamada = new LlamadaEntity();
+        public Llamada GetLlamadaById(int id) {
+            Llamada oLlamada = new Llamada();
             string consulta = "select * from llamada where idLlamada = " + id;
 
             DataTable tabla = BDHelper.ObtenerInstancia().Consultar(consulta);
@@ -38,7 +34,7 @@ namespace PPAI.Data.Daos {
             return oLlamada;
         }
 
-        public int RegLlamadaRta(LlamadaEntity oLlamada) {
+        public int RegLlamadaRta(Llamada oLlamada) {
             string consulta = "UPDATE Llamada SET " +
                               "descripcionOperador='" + oLlamada.DescripcionOperador + "'," +
                               "duracion='" + oLlamada.Duracion.ToString() + "', " +

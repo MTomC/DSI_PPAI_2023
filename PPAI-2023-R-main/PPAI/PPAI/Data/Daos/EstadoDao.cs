@@ -3,15 +3,12 @@ using PPAI.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TPPav1.Datos;
 
 namespace PPAI.Data.Daos {
     public class EstadoDao : IEstadoDao {
-        public EstadoEntity GetEstadoById(int id) {
-            EstadoEntity oEstado = new EstadoEntity();
+        public Estado GetEstadoById(int id) {
+            Estado oEstado = new Estado();
             string consulta = "SELECT * FROM Estado WHERE id =" + id;
 
             DataTable tabla = BDHelper.ObtenerInstancia().Consultar(consulta);
@@ -22,14 +19,14 @@ namespace PPAI.Data.Daos {
             return oEstado;
         }
 
-        public List<EstadoEntity> GetAll() {
-            List<EstadoEntity> lista = new List<EstadoEntity>();
+        public List<Estado> GetAll() {
+            List<Estado> lista = new List<Estado>();
             string consulta = "Select * from Estado";
 
             DataTable tabla = BDHelper.ObtenerInstancia().Consultar(consulta);
             if (tabla.Rows.Count > 0) {
                 foreach (DataRow fila in tabla.Rows) {
-                    EstadoEntity oEstado = new EstadoEntity();
+                    Estado oEstado = new Estado();
                     oEstado.Nombre = fila["nombre"].ToString();
                     lista.Add(oEstado);
                 }
