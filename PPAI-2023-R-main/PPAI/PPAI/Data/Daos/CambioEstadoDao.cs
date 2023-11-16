@@ -19,10 +19,9 @@ namespace PPAI.Data.Daos {
             EstadoDao edao = new EstadoDao();
             if (tabla.Rows.Count > 0) {
                 foreach (DataRow fila in tabla.Rows) {
-                    CambioEstado oCambio = new CambioEstado();
-                    oCambio.Estado = edao.GetEstadoById((int)fila["idEstado"]);
-                    oCambio.FechaHoraInicio = (DateTime)fila["fechaHoraInicio"];
-                    oCambio.Id = Int32.Parse(tabla.Rows[0]["id"].ToString());
+                    var oCambio = new CambioEstado((DateTime)fila["fechaHoraInicio"], 
+                        edao.GetEstadoById((int)fila["idEstado"]));
+                    //oCambio.Id = Int32.Parse(tabla.Rows[0]["id"].ToString());
                     lista.Add(oCambio);
                 }
             }
