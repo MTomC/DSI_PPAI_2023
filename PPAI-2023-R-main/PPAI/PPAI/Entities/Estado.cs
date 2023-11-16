@@ -18,27 +18,29 @@ namespace PPAI.Entities
         public virtual bool EsCancelada() { return false; }
         public virtual void NuevaRtaOperador(Llamada llamada, List<CambioEstado> cambios) { }
         public virtual void FinalizarLlamada(Llamada llamada, List<CambioEstado> cambios) { }
-        public virtual Estado CreateProximoEstado() { return null;}
+
+        public virtual void CancelarLlamada(Llamada llamada, List<CambioEstado> cambios)
+        {
+            var cambio = FindLastCambioEstado(cambios);
+            UpdateEstado(llamada, cambio, EstadoCancelada.GetInstance());
+        }
+        protected virtual Estado CreateProximoEstado() { return null;}
         
         // -----------------------------------------------------------------------------------------------------------\\
-        
-        public CambioEstado CreateCambioEstado(Estado estado)
-        { return new CambioEstado(DateTime.Now, estado); }
 
-        public CambioEstado FindLastCambioEstado(List<CambioEstado> cambios)
+        protected CambioEstado FindLastCambioEstado(List<CambioEstado> cambios)
         { return cambios.Find(x => x.Estado == this); }
 
-        public TimeSpan CalcularDuracion(CambioEstado cambio)
+        protected TimeSpan CalcularDuracion(CambioEstado cambio)
         { return cambio.FechaHoraFin - cambio.FechaHoraInicio; }
 
-        public void UpdateEstado(Llamada llamada, CambioEstado cambioEstado)
+        protected void UpdateEstado(Llamada llamada, CambioEstado cambioEstado, Estado nuevoEstado)
         {
             // Update FechaHoraFin from CambioEstado
             cambioEstado.FechaHoraFin = DateTime.Now;
             
             // Create new Estado and CambioEstado
-            var nuevoEstado = CreateProximoEstado();
-            var nuevoCambioEstado = CreateCambioEstado(nuevoEstado);
+            var nuevoCambioEstado = new CambioEstado(DateTime.Now, nuevoEstado);
             
             // Set new Estado and Add new CambioEstado in Llamada
             llamada.Estado = nuevoEstado;

@@ -1,4 +1,6 @@
-﻿namespace PPAI.Entities
+﻿using System.Collections.Generic;
+
+namespace PPAI.Entities
 {
     // Inheritance class {State}
     public class EstadoFinalizada : Estado
@@ -20,6 +22,8 @@
         
         // Override methods
         public override bool EsFinalizada() { return true; }
+
+        public override void CancelarLlamada(Llamada llamada, List<CambioEstado> cambios) { }
 
     }
 }

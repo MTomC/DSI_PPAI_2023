@@ -1,4 +1,6 @@
-﻿namespace PPAI.Entities
+﻿using System.Collections.Generic;
+
+namespace PPAI.Entities
 {
     public class EstadoCancelada : Estado
     {
@@ -17,6 +19,8 @@
         
         // Overriding boolean method {State}
         public override bool EsCancelada() { return true; }
+        public override void CancelarLlamada(Llamada llamada, List<CambioEstado> cambios) { }
+
         
     }
 }

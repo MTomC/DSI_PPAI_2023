@@ -29,10 +29,9 @@ namespace PPAI.Entities
             // Calculate Duracion
             llamada.Duracion = CalcularDuracion(cambio);
             // Update Estado y CambioEstado
-            UpdateEstado(llamada, cambio);
+            UpdateEstado(llamada, cambio, EstadoFinalizada.GetInstance());
         }
-        public override Estado CreateProximoEstado() { return EstadoFinalizada.GetInstance(); }
-
+        
         
     }
 }

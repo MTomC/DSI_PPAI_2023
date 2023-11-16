@@ -25,12 +25,8 @@ namespace PPAI.Entities
         public override void NuevaRtaOperador(Llamada llamada, List<CambioEstado> cambios)
         {
             var cambio = FindLastCambioEstado(cambios);
-            UpdateEstado(llamada, cambio);
+            UpdateEstado(llamada, cambio, EstadoEnCurso.GetInstance());
         }
-
-        public override Estado CreateProximoEstado() { return EstadoEnCurso.GetInstance(); }
-
-
 
     }
 }

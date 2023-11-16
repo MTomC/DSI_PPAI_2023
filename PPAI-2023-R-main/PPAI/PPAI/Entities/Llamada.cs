@@ -50,6 +50,11 @@ namespace PPAI.Entities {
             Estado.FinalizarLlamada(this, CambiosEstado); // Delegar al estado
         }
 
+        public void CancelarLlamada()
+        {
+            Estado.CancelarLlamada(this, CambiosEstado);
+        }
+
         public bool ValidarInfoCliente(string respuesta, ValidacionEntity validacion) { //esInfoCorrecta
             return Cliente.EsInfoCorrecta(respuesta, validacion);  
         }

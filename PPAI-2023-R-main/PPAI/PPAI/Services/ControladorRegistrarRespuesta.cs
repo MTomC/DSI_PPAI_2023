@@ -59,6 +59,7 @@ namespace PPAI.Services {
             llamadaActual.FinalizarLlamada(); // Delegar a la llamada
             // ------------------------------------------------------------------
             
+            /*
             Estado finalizada = null;
             foreach (Estado estadoE in estadoService.GetAll()) {  //esFinalizada
                 if (estadoE.EsFinalizada())
@@ -68,6 +69,7 @@ namespace PPAI.Services {
             llamadaActual.CalcularDuracion(now);   //calcularDuracion
             if (finalizada != null)
                 llamadaActual.SetEstadoActual(finalizada, now);
+                */
 
             int filasAfectadas = llamadaService.RegLlamadaRta(llamadaActual);
             if (filasAfectadas >= 1)
@@ -78,7 +80,12 @@ namespace PPAI.Services {
 
         //Flujo Alternativo: CancelarLlamada
         public void CancelarLlamada() {
-            Estado cancelada = null;
+            // -----------Version con el patron aplicado-------------------------------------------------\\
+            llamadaActual.CancelarLlamada();
+            // ------------------------------------------------------------------------------------------\\
+
+            
+            /*Estado cancelada = null;
             foreach (Estado estadoE in estadoService.GetAll()) {
                 if (estadoE.EsCancelada())
                     cancelada = estadoE;
@@ -86,7 +93,7 @@ namespace PPAI.Services {
             DateTime now = DateTime.Now;
             llamadaActual.CalcularDuracion(now);
             if (cancelada != null)
-                llamadaActual.SetEstadoActual(cancelada, now);
+                llamadaActual.SetEstadoActual(cancelada, now);*/
         }
 
         public void FinCU() {
