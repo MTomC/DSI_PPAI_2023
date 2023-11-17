@@ -7,9 +7,7 @@ using System.Threading.Tasks;
 
 namespace PPAI.Data.InterfacesDaos {
     interface IOpcionLlamadaDao {
-
         OpcionLlamadaEntity GetOpcionLlamadaById(int id);
-
         List<OpcionLlamadaEntity> GetOpcionByCategoriaId(int id);
     }
 }

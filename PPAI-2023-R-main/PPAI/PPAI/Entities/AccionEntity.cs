@@ -5,11 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace PPAI.Entities {
-    public class AccionEntity {
+    public class AccionEntity : Entity {
         private string descripcion;
-        private int id;
-
         public string Descripcion { get => descripcion; set => descripcion = value; }
-        public int Id { get => id; set => id = value; }
     }
 }

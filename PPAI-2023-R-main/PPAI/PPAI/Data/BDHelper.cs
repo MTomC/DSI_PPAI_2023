@@ -17,6 +17,7 @@ namespace TPPav1.Datos {
         private BDHelper() {
             conexion = new SqlConnection();
             comando = new SqlCommand();
+            //cambio Base 2
             cadenaConexion = @"Data Source=DESKTOP-NOF37IC\SQLEXPRESS;Initial Catalog=PPAI;Integrated Security=True";
         }
 
@@ -52,6 +53,7 @@ namespace TPPav1.Datos {
         }
 
         public int Actualizar(string consultaSQL) {
+            //int filasAfectadas = comando.ExecuteNonQuery();
             int filasAfectadas = 0;
             conexion.ConnectionString = cadenaConexion;
             conexion.Open();
@@ -63,6 +65,21 @@ namespace TPPav1.Datos {
 
             conexion.Close();
             return filasAfectadas;
+        }
+
+        public int Insertar(string consultaSQL, string tabla) {
+            int id;
+            conexion.ConnectionString = cadenaConexion;
+            conexion.Open();
+
+            comando.Connection = conexion;
+            comando.CommandType = CommandType.Text;
+            comando.CommandText = consultaSQL;
+            comando.ExecuteNonQuery();
+
+            id = (int) ConsultaSQLScalar("SELECT * FROM " + tabla + " ORDER BY 1 DESC");
+            conexion.Close();
+            return id;
         }
 
         public void ConectarConTransaccion() {

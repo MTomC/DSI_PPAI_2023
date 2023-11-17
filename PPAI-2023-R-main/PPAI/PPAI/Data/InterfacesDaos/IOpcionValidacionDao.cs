@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace PPAI.Data.InterfacesDaos {
     interface IOpcionValidacionDao {
-
         OpcionValidacionEntity GetOpcionValidacionById(int id);
     }
 }

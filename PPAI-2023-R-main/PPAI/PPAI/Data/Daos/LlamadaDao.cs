@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TPPav1.Datos;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace PPAI.Data.Daos {
     public class LlamadaDao : ILlamadaDao {
@@ -19,13 +20,16 @@ namespace PPAI.Data.Daos {
             OpcionLlamadaDao oldao = new OpcionLlamadaDao();
             SubOpcionLlamadaDao soldao = new SubOpcionLlamadaDao();
             CambioEstadoDao cedao = new CambioEstadoDao();
+            AccionDao adao = new AccionDao();
             if (tabla.Rows.Count > 0) {
                 oLlamada.DescripcionOperador = tabla.Rows[0]["descripcionOperador"].ToString();
-                oLlamada.Accion.Descripcion = tabla.Rows[0]["detalleAccionRequerida"].ToString();
+                if (tabla.Rows[0]["idAccion"] != DBNull.Value)
+                    oLlamada.Accion = adao.GetAccionById((int)tabla.Rows[0]["idAccion"]);
                 string encuesta = tabla.Rows[0]["encuestaEnviada"].ToString();
                 if (encuesta == "1")
                     oLlamada.EncuestaEnviada = true;
-                oLlamada.EncuestaEnviada = false;
+                else
+                    oLlamada.EncuestaEnviada = false;
 
                 oLlamada.ObservacionAuditor = tabla.Rows[0]["observacionAuditor"].ToString();
                 oLlamada.Id = Int32.Parse(tabla.Rows[0]["idLlamada"].ToString());
@@ -34,20 +38,52 @@ namespace PPAI.Data.Daos {
                 oLlamada.OpcionSeleccionada = oldao.GetOpcionLlamadaById((int)tabla.Rows[0]["idOpcionLlamada"]);
                 oLlamada.SubOpcionSeleccionada = soldao.GetSubOpcionLlamadaById((int)tabla.Rows[0]["idSubOpcionLlamada"]);
                 oLlamada.CambiosEstado = cedao.GetCambiosByLlamadaId(id);
+                if (oLlamada.CambiosEstado.Count > 0)
+                    oLlamada.EstadoActual = oLlamada.CambiosEstado[oLlamada.CambiosEstado.Count - 1].EstadoAP;
             }
             return oLlamada;
         }
 
-        public int RegLlamadaRta(LlamadaEntity oLlamada) {
-            string consulta = "UPDATE Llamada SET " +
-                              "descripcionOperador='" + oLlamada.DescripcionOperador + "'," +
-                              "duracion='" + oLlamada.Duracion.ToString() + "', " +
-                              "detalleAccionRequerida='" + oLlamada.Accion.Descripcion.ToString() + "', " +
-                              "encuestaEnviada='" + oLlamada.EncuestaEnviada.ToString() + "', " +
-                              "observacionAuditor='" + oLlamada.ObservacionAuditor.ToString() + "', " +
-                              "idAccion='" + oLlamada.Accion.Id.ToString() + "' " +
-                              "WHERE idLlamada='" + oLlamada.Id.ToString() + "' ";
-            return BDHelper.ObtenerInstancia().Actualizar(consulta);
+        public int NuevaLlamada() {
+            int nuevoId;
+            string tabla = "Llamada";
+            string consulta = "insert into Llamada(idCliente, idSubOpcionLlamada, idOpcionLlamada, idUsuario, Estado)" +
+                "values(1, 2, 1, 1, 1)";
+            nuevoId = BDHelper.ObtenerInstancia().Insertar(consulta, tabla);
+            
+            CambioEstadoDao cedao = new CambioEstadoDao();
+            cedao.Insertar(DateTime.Now, 1, nuevoId);
+
+           return nuevoId;
+        }
+
+        public bool Update(LlamadaEntity llamada, bool cambioEstado = true) {
+            int encuesta = 0;
+            if (llamada.EncuestaEnviada)
+                encuesta = 1;
+            StringBuilder commandText = new StringBuilder();
+            commandText.AppendFormat("Update llamada ");
+            commandText.AppendFormat(" Set descripcionOperador = '{0}', ", llamada.DescripcionOperador);
+            commandText.AppendFormat("      detalleAccionRequerida = '{0}', ", llamada.DetalleAccionRequerida);
+            commandText.AppendFormat("      duracion = '{0}', ", llamada.Duracion);
+            commandText.AppendFormat("      encuestaEnviada = {0}, ", encuesta);
+            commandText.AppendFormat("      idCliente = {0}, ", llamada.Cliente.Id);
+            commandText.AppendFormat("      idSubOpcionLlamada = {0}, ", llamada.SubOpcionSeleccionada.Id);
+            commandText.AppendFormat("      idOpcionLlamada = {0}, ", llamada.OpcionSeleccionada.Id);
+            commandText.AppendFormat("      Estado = {0} ", llamada.EstadoActual.Id);
+            if (llamada.Accion != null)
+                commandText.AppendFormat(" ,idAccion = {0} ", llamada.Accion.Id);
+            commandText.AppendFormat(" where idLlamada = {0} ", llamada.Id);
+
+            if (cambioEstado) {
+                CambioEstadoDao cedao = new CambioEstadoDao();
+                CambioEstadoEntity cambio = llamada.CambiosEstado[llamada.CambiosEstado.Count - 1];
+                cambio.Id = cedao.Insertar(cambio, llamada.Id);
+            }
+
+            int filas = BDHelper.ObtenerInstancia().Actualizar(commandText.ToString());
+
+            return filas < 0;
         }
     }
 }

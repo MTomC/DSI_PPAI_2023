@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PPAI.Data.Daos;
+using PPAI.Data.InterfacesDaos;
 using PPAI.Entities;
 using PPAI.Services;
 using PPAI.Services.Implementaciones;
@@ -15,6 +17,8 @@ using PPAI.Services.Interfaces;
 namespace PPAI.UI {
     public partial class PantallaRegistrarRespuesta : Form {
         ControladorRegistrarRespuesta controlador = new ControladorRegistrarRespuesta();
+        IAccionDao accionD = new AccionDao();
+        ILlamadaDao llamadaD = new LlamadaDao();
 
         public PantallaRegistrarRespuesta() {
             InitializeComponent();
@@ -24,7 +28,8 @@ namespace PPAI.UI {
             CargarComboAcciones();
             cboAcciones.Enabled = false;
             // InterfazIVR
-            controlador.NuevaRtaOperador(2, 1, this);
+            int idLlamada = llamadaD.NuevaLlamada();
+            controlador.NuevaRtaOperador(idLlamada, 1, this);
             controlador.BuscarDatosLlamada();
         }
 
@@ -44,6 +49,11 @@ namespace PPAI.UI {
 
         //Flujo Alternativo: DatoIncorrecto
         private void btnConfirmar_Click(object sender, EventArgs e) {
+            Confirmar();
+        }
+        
+
+        private void Confirmar() {
             bool flag = true;
             foreach (DataGridViewRow fila in dgvValidaciones.Rows) {  //tomarOpValidadas
                 if (!controlador.TomarValidacion(fila.Cells["Validaciones"].Value.ToString(), fila.Cells["Respuestas"].Value.ToString())) {
@@ -59,6 +69,10 @@ namespace PPAI.UI {
         }
 
         private void btnOk_Click(object sender, EventArgs e) {
+            Ok();
+        }
+
+        private void Ok() {
             if (MessageBox.Show("Desea confirmar la operacion realizada?", "Confirmacion", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK) {
                 AccionEntity accionActual = new AccionEntity();
                 accionActual.Id = (int)cboAcciones.SelectedIndex + 1;
@@ -68,6 +82,10 @@ namespace PPAI.UI {
         }
 
         private void btnCancelar_Click(object sender, EventArgs e) {
+            Cancelar();
+        }
+
+        private void Cancelar() {
             if (MessageBox.Show("Esta seguro que desea cancelar la operacion?", "Confirmacion", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK) {
                 controlador.CancelarLlamada();
                 this.Close();
@@ -75,8 +93,7 @@ namespace PPAI.UI {
         }
 
         private void CargarComboAcciones() {
-            IAccionService accionS = new AccionService();
-            cboAcciones.DataSource = accionS.GetAll();
+            cboAcciones.DataSource = accionD.GetAll();
             cboAcciones.DisplayMember = "Descripcion";
             cboAcciones.ValueMember = "Id";
             cboAcciones.SelectedIndex = -1;

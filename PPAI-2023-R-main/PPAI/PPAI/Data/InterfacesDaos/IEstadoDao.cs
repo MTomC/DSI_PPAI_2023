@@ -7,9 +7,7 @@ using System.Threading.Tasks;
 
 namespace PPAI.Data.InterfacesDaos {
     interface IEstadoDao {
-
         EstadoEntity GetEstadoById(int id);
-
         List<EstadoEntity> GetAll();
     }
 }

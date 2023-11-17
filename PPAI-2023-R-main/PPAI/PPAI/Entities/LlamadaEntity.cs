@@ -16,10 +16,9 @@ namespace PPAI.Entities {
         private string auditor;
         private string operador;
         private ClienteEntity cliente = new ClienteEntity();
-        private AccionEntity accion = new AccionEntity();
+        private AccionEntity accion;
 
         private List<CambioEstadoEntity> cambiosEstado = new List<CambioEstadoEntity>();
-        private int id;
 
         public string DescripcionOperador { get => descripcionOperador; set => descripcionOperador = value; }
         public string DetalleAccionRequerida { get => detalleAccionRequerida; set => detalleAccionRequerida = value; }
@@ -34,28 +33,44 @@ namespace PPAI.Entities {
         public AccionEntity Accion { get => accion; set => accion = value; }
 
         public List<CambioEstadoEntity> CambiosEstado { get => cambiosEstado; set => cambiosEstado = value; }
-        public int Id { get => id; set => id = value; }
+        public EstadoA EstadoActual { get; set; }
 
-        public void SetEstadoActual(EstadoEntity e, DateTime fecha) {  
-            CambioEstadoEntity nuevoCambioEstado = new CambioEstadoEntity(); //new nuevo:cambioEstado
-            nuevoCambioEstado.Estado = e;
-            nuevoCambioEstado.FechaHoraInicio = fecha;
-            CambiosEstado.Add(nuevoCambioEstado);  //setCambioEstado
+        public override string ToString() {
+            return base.ToString();
         }
 
         public bool ValidarInfoCliente(string respuesta, ValidacionEntity validacion) { //esInfoCorrecta
             return Cliente.EsInfoCorrecta(respuesta, validacion);  
         }
 
-        public void CalcularDuracion(DateTime horaFin) {
-            DateTime horaInicio = DateTime.Now;
-            foreach (CambioEstadoEntity cambioEstado in CambiosEstado) {
-                if (cambioEstado.Estado.EsEnCurso())
-                    horaInicio = cambioEstado.FechaHoraInicio;
-            }
-            if (horaInicio != null) {
-                Duracion = horaFin - horaInicio;
-            }
+        public void Finalizada(DateTime now) {
+            EstadoActual.Finalizada(now, this);
         }
+
+        public void TomadaPorOperador(DateTime now) {
+            EstadoActual.TomadaPorOperador(now, this);
+        }
+
+        public void Cancelada(DateTime now) {
+            EstadoActual.Cancelada(now, this);
+        }
+
+        //public void SetEstadoActual(EstadoEntity e, DateTime fecha) {  
+        //    CambioEstadoEntity nuevoCambioEstado = new CambioEstadoEntity(); //new nuevo:cambioEstado
+        //    nuevoCambioEstado.Estado = e;
+        //    nuevoCambioEstado.FechaHoraInicio = fecha;
+        //    CambiosEstado.Add(nuevoCambioEstado);  //setCambioEstado
+        //}
+
+        //public void CalcularDuracion(DateTime horaFin) {
+        //    DateTime horaInicio = DateTime.Now;
+        //    foreach (CambioEstadoEntity cambioEstado in CambiosEstado) {
+        //        if (cambioEstado.Estado.EsEnCurso())
+        //            horaInicio = cambioEstado.FechaHoraInicio;
+        //    }
+        //    if (horaInicio != null) {
+        //        Duracion = horaFin - horaInicio;
+        //    }
+        //}
     }
 }

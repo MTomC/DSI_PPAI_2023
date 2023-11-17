@@ -1,4 +1,5 @@
-﻿using PPAI.Entities;
+﻿using PPAI.Data.InterfacesDaos;
+using PPAI.Entities;
 using PPAI.Services.Implementaciones;
 using PPAI.Services.Interfaces;
 using PPAI.UI;
@@ -18,9 +19,15 @@ namespace PPAI.Services {
         List<ValidacionEntity> validaciones = new List<ValidacionEntity>();
         PantallaRegistrarRespuesta _pantalla;
 
-        IEstadoService estadoService = new EstadoService();
-        ILlamadaService llamadaService = new LlamadaService();
-        ICategoriaLlamadaService categoriaService = new CategoriaLlamadaService();
+        //Servicios de Datos (Service --> Dao)
+        ILlamadaDao llamadaD = new LlamadaDao();
+        ICategoriaLlamadaDao categoriaD = new CategoriaLlamadaDao();
+        IOpcionLlamadaDao opcionD = new OpcionLlamadaDao();
+        IAccionDao accionD = new AccionDao();
+
+        //IEstadoService estadoService = new EstadoService();
+        //ILlamadaService llamadaService = new LlamadaService();
+        //ICategoriaLlamadaService categoriaService = new CategoriaLlamadaService();
 
         internal void BuscarDatosLlamada() {
             BuscarInfoLlamada();
@@ -33,16 +40,22 @@ namespace PPAI.Services {
         }
 
         public void NuevaRtaOperador(int idLlamada, int idCategoria, PantallaRegistrarRespuesta pantalla) {
-            llamadaActual = llamadaService.GetLlamadaById(idLlamada); //getCliente
-            categoriaSeleccionada = categoriaService.GetCategoriaLlamadaById(idCategoria); //getCategoria
+            llamadaActual = llamadaD.GetLlamadaById(idLlamada); //getCliente
+            categoriaSeleccionada = categoriaD.GetCategoriaLlamadaById(idCategoria); //getCategoria
             _pantalla = pantalla;
-            EstadoEntity enCurso = null;
-            foreach (EstadoEntity estadoE in estadoService.GetAll()) { //*esEnCurso
-                if (estadoE.EsEnCurso()) 
-                    enCurso = estadoE;
-            }
-            if (enCurso != null)
-                llamadaActual.SetEstadoActual(enCurso, DateTime.Now); //obtenerFechaActual
+
+            OpcionLlamadaEntity opcionTomada = opcionD.GetOpcionLlamadaById(5);
+            llamadaActual.OpcionSeleccionada = opcionTomada;
+            llamadaActual.TomadaPorOperador(DateTime.Now);
+            llamadaD.Update(llamadaActual);
+
+            //EstadoEntity enCurso = null;
+            //foreach (EstadoEntity estadoE in estadoService.GetAll()) { //*esEnCurso
+            //    if (estadoE.EsEnCurso()) 
+            //        enCurso = estadoE;
+            //}
+            //if (enCurso != null)
+            //    llamadaActual.SetEstadoActual(enCurso, DateTime.Now); //obtenerFechaActual
         }
 
         public void BuscarInfoLlamada() {
@@ -53,37 +66,50 @@ namespace PPAI.Services {
             }
         }
 
-        public void TomarRtaYConfirmacion(string rtaOperador, AccionEntity accion) {
+        public void TomarRtaYConfirmacion(string rtaOperador, int idAccion) {
             llamadaActual.DescripcionOperador = rtaOperador;
+            AccionEntity accion = accionD.GetAccionById(idAccion);
             LlamarCU28(accion);
-            EstadoEntity finalizada = null;
-            foreach (EstadoEntity estadoE in estadoService.GetAll()) {  //esFinalizada
-                if (estadoE.EsFinalizada())
-                    finalizada = estadoE;
-            }
-            DateTime now = DateTime.Now;
-            llamadaActual.CalcularDuracion(now);   //calcularDuracion
-            if (finalizada != null)
-                llamadaActual.SetEstadoActual(finalizada, now);
 
-            int filasAfectadas = llamadaService.RegLlamadaRta(llamadaActual);
-            if (filasAfectadas >= 1)
-                FinCU();
+            OpcionLlamadaEntity opcionFinalizada = opcionD.GetOpcionLlamadaById(6);
+            llamadaActual.OpcionSeleccionada = opcionFinalizada;
+            llamadaActual.Finalizada(DateTime.Now);
+            llamadaD.Update(llamadaActual);
+            FinCU();
 
-            MessageBox.Show("Los datos de la LLamadaActual NO se registraron con éxito..");
+            //EstadoEntity finalizada = null;
+            //foreach (EstadoEntity estadoE in estadoService.GetAll()) {  //esFinalizada
+            //    if (estadoE.EsFinalizada())
+            //        finalizada = estadoE;
+            //}
+            //DateTime now = DateTime.Now;
+            //llamadaActual.CalcularDuracion(now);   //calcularDuracion
+            //if (finalizada != null)
+            //    llamadaActual.SetEstadoActual(finalizada, now);
+
+            //int filasAfectadas = llamadaService.RegLlamadaRta(llamadaActual);
+            //if (filasAfectadas >= 1)
+            //    FinCU();
+
+            //MessageBox.Show("Los datos de la LLamadaActual NO se registraron con éxito..");
         }
 
         //Flujo Alternativo: CancelarLlamada
         public void CancelarLlamada() {
-            EstadoEntity cancelada = null;
-            foreach (EstadoEntity estadoE in estadoService.GetAll()) {
-                if (estadoE.EsCancelada())
-                    cancelada = estadoE;
-            }
-            DateTime now = DateTime.Now;
-            llamadaActual.CalcularDuracion(now);
-            if (cancelada != null)
-                llamadaActual.SetEstadoActual(cancelada, now);
+            OpcionLlamadaEntity opcionCancelada = opcionD.GetOpcionLlamadaById(7);
+            llamadaActual.OpcionSeleccionada = opcionCancelada;
+            llamadaActual.Cancelada(DateTime.Now);
+            llamadaD.Update(llamadaActual);
+
+            //EstadoEntity cancelada = null;
+            //foreach (EstadoEntity estadoE in estadoService.GetAll()) {
+            //    if (estadoE.EsCancelada())
+            //        cancelada = estadoE;
+            //}
+            //DateTime now = DateTime.Now;
+            //llamadaActual.CalcularDuracion(now);
+            //if (cancelada != null)
+            //    llamadaActual.SetEstadoActual(cancelada, now);
         }
 
         public void FinCU() {
@@ -93,6 +119,7 @@ namespace PPAI.Services {
 
         public void LlamarCU28(AccionEntity accion) {
             llamadaActual.Accion = accion;
+            llamadaD.Update(llamadaActual, false);
             MessageBox.Show("Accion registrada con exito");
         }
 

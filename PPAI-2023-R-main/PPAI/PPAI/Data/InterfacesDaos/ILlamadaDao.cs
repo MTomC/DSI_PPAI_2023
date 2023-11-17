@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace PPAI.Data.InterfacesDaos {
     interface ILlamadaDao {
-
         LlamadaEntity GetLlamadaById(int id);
-
-        int RegLlamadaRta(LlamadaEntity oLlamada);
+        int NuevaLlamada();
+        bool Update(LlamadaEntity llamada, bool cambioEstado = true);
     }
 }
