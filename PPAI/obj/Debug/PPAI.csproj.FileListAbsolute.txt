@@ -8,3 +8,13 @@ C:\Users\tomas\Downloads\PPAI-2023-R-Entrega-3\PPAI-2023-R-Entrega-3\PPAI\PPAI\o
 C:\Users\tomas\Downloads\PPAI-2023-R-Entrega-3\PPAI-2023-R-Entrega-3\PPAI\PPAI\obj\Debug\PPAI.csproj.CoreCompileInputs.cache
 C:\Users\tomas\Downloads\PPAI-2023-R-Entrega-3\PPAI-2023-R-Entrega-3\PPAI\PPAI\obj\Debug\PPAI.exe
 C:\Users\tomas\Downloads\PPAI-2023-R-Entrega-3\PPAI-2023-R-Entrega-3\PPAI\PPAI\obj\Debug\PPAI.pdb
+C:\Users\tomas\Documents\PPAI\DSI_PPAI_2023\PPAI\bin\Debug\PPAI.exe.config
+C:\Users\tomas\Documents\PPAI\DSI_PPAI_2023\PPAI\bin\Debug\PPAI.exe
+C:\Users\tomas\Documents\PPAI\DSI_PPAI_2023\PPAI\bin\Debug\PPAI.pdb
+C:\Users\tomas\Documents\PPAI\DSI_PPAI_2023\PPAI\obj\Debug\PPAI.csproj.AssemblyReference.cache
+C:\Users\tomas\Documents\PPAI\DSI_PPAI_2023\PPAI\obj\Debug\PPAI.Properties.Resources.resources
+C:\Users\tomas\Documents\PPAI\DSI_PPAI_2023\PPAI\obj\Debug\PPAI.UI.PantallaRegistrarRespuesta.resources
+C:\Users\tomas\Documents\PPAI\DSI_PPAI_2023\PPAI\obj\Debug\PPAI.csproj.GenerateResource.cache
+C:\Users\tomas\Documents\PPAI\DSI_PPAI_2023\PPAI\obj\Debug\PPAI.csproj.CoreCompileInputs.cache
+C:\Users\tomas\Documents\PPAI\DSI_PPAI_2023\PPAI\obj\Debug\PPAI.exe
+C:\Users\tomas\Documents\PPAI\DSI_PPAI_2023\PPAI\obj\Debug\PPAI.pdb

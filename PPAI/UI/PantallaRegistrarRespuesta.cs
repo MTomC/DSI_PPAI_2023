@@ -82,7 +82,7 @@ namespace PPAI.UI
             {
                 if (!controlador.TomarValidacion(fila.Cells["Validaciones"].Value.ToString(), fila.Cells["Respuestas"].Value.ToString()))
                 {
-                    MessageBox.Show(fila.Cells["Validaciones"].Value.ToString() + " es incorrecta!!");
+                    MessageBox.Show(fila.Cells["Validaciones"].Value.ToString() + " es incorrecta!!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     flag = false;
                 }
             }

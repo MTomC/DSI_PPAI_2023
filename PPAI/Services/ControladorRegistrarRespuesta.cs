@@ -83,14 +83,14 @@ namespace PPAI.Services
 
         public void FinCU()
         {
-            MessageBox.Show("Respuesta registrada con exito");
+            MessageBox.Show("Respuesta registrada con exito", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         public void LlamarCU28(AccionEntity accion)
         {
             llamadaActual.Accion = accion;
             llamadaD.Update(llamadaActual, false);
-            MessageBox.Show("Accion registrada con exito");
+            MessageBox.Show("Accion registrada con exito", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         public bool TomarValidacion(string validacion, string respuesta)
