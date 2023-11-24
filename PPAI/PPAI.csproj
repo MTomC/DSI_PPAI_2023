@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4A60675D-B724-4049-A2F9-360ED6653C60}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>PPAI</RootNamespace>
+    <AssemblyName>PPAI</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Data\BDHelper.cs" />
+    <Compile Include="Data\Daos\AccionDao.cs" />
+    <Compile Include="Data\Daos\CambioEstadoDao.cs" />
+    <Compile Include="Data\Daos\CategoriaLlamadaDao.cs" />
+    <Compile Include="Data\Daos\ClienteDao.cs" />
+    <Compile Include="Data\Daos\EstadoDao.cs" />
+    <Compile Include="Data\Daos\InformacionClienteDao.cs" />
+    <Compile Include="Data\Daos\LlamadaDao.cs" />
+    <Compile Include="Data\Daos\OpcionLlamadaDao.cs" />
+    <Compile Include="Data\Daos\SubOpcionLlamadaDao.cs" />
+    <Compile Include="Data\Daos\ValidacionDao.cs" />
+    <Compile Include="Data\InterfacesDaos\IAccionDao.cs" />
+    <Compile Include="Data\InterfacesDaos\ICambioEstadoDao.cs" />
+    <Compile Include="Data\InterfacesDaos\ICategoriaLlamadaDao.cs" />
+    <Compile Include="Data\Daos\OpcionValidacionDao.cs" />
+    <Compile Include="Data\InterfacesDaos\IClienteDao.cs" />
+    <Compile Include="Data\InterfacesDaos\IEstadoDao.cs" />
+    <Compile Include="Data\InterfacesDaos\IInformacionClienteDao.cs" />
+    <Compile Include="Data\InterfacesDaos\ILlamadaDao.cs" />
+    <Compile Include="Data\InterfacesDaos\IOpcionLlamadaDao.cs" />
+    <Compile Include="Data\InterfacesDaos\IOpcionValidacionDao.cs" />
+    <Compile Include="Data\InterfacesDaos\ISubOpcionLlamadaDao.cs" />
+    <Compile Include="Data\InterfacesDaos\IValidacionDao.cs" />
+    <Compile Include="Entities\AccionEntity.cs" />
+    <Compile Include="Entities\CambioEstadoEntity.cs" />
+    <Compile Include="Entities\CategoriaLlamadaEntity.cs" />
+    <Compile Include="Entities\ClienteEntity.cs" />
+    <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\EstadoA.cs" />
+    <Compile Include="Entities\EstadoEntity.cs" />
+    <Compile Include="Entities\Estados\Cancelada.cs" />
+    <Compile Include="Entities\Estados\Descartada.cs" />
+    <Compile Include="Entities\Estados\EnCurso.cs" />
+    <Compile Include="Entities\Estados\EscuchaConObservacion.cs" />
+    <Compile Include="Entities\Estados\EscuchaCorrecta.cs" />
+    <Compile Include="Entities\Estados\Finalizada.cs" />
+    <Compile Include="Entities\Estados\Iniciada.cs" />
+    <Compile Include="Entities\Estados\PendienteDeEscucha.cs" />
+    <Compile Include="Entities\InformacionClienteEntity.cs" />
+    <Compile Include="Entities\LlamadaEntity.cs" />
+    <Compile Include="Entities\OpcionLlamadaEntity.cs" />
+    <Compile Include="Entities\OpcionValidacionEntity.cs" />
+    <Compile Include="Entities\SubOpcionLlamadaEntity.cs" />
+    <Compile Include="Entities\ValidacionEntity.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ControladorRegistrarRespuesta.cs" />
+    <Compile Include="UI\PantallaRegistrarRespuesta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\PantallaRegistrarRespuesta.Designer.cs">
+      <DependentUpon>PantallaRegistrarRespuesta.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="UI\PantallaRegistrarRespuesta.resx">
+      <DependentUpon>PantallaRegistrarRespuesta.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
